@@ -18,6 +18,7 @@ import shop.makaroni.bunjang.src.domain.user.view.MyStoreResponse;
 import shop.makaroni.bunjang.src.domain.user.view.StoreInfoView;
 import shop.makaroni.bunjang.src.domain.user.view.StoreSaleView;
 import shop.makaroni.bunjang.src.domain.user.view.StoreSearchView;
+import shop.makaroni.bunjang.src.repository.UserRepository;
 import shop.makaroni.bunjang.src.response.exception.CannotFindPurchasedItem;
 import shop.makaroni.bunjang.src.response.exception.DontPurchaseItemEx;
 import shop.makaroni.bunjang.src.response.exception.DuplicateLoginIdEx;
@@ -43,6 +44,8 @@ public class UserProvider {
 	private final FollowDao followDao;
 	private final ReviewProvider reviewProvider;
 	private final InquiryProvider inquiryProvider;
+
+	private final UserRepository userRepository;
 
 	public MyStoreResponse getMyStore(Long userIdx) {
 
@@ -80,13 +83,9 @@ public class UserProvider {
 	}
 
 	public void checkDuplicateLoginId(String loginId) {
-		boolean isNotDuplicate = userDao.findByLoginId(loginId).isEmpty();
-
-		if (isNotDuplicate) {
-			return;
+		if (userRepository.existsByLoginId(loginId)) {
+			throw new DuplicateLoginIdEx(DUPLICATE_LOGIN_ID_EXCEPTION.getMessages());
 		}
-
-		throw new DuplicateLoginIdEx(DUPLICATE_LOGIN_ID_EXCEPTION.getMessages());
 	}
 
 	public StoreInfoView getStoreById(Long storeIdx) {

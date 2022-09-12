@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.makaroni.bunjang.src.dao.UserDao;
 import shop.makaroni.bunjang.src.domain.user.User;
+import shop.makaroni.bunjang.src.domain.user.Users;
 import shop.makaroni.bunjang.src.domain.user.dto.PatchUserRequest;
 import shop.makaroni.bunjang.src.domain.user.dto.SaveUserRequest;
 import shop.makaroni.bunjang.src.provider.UserProvider;
+import shop.makaroni.bunjang.src.repository.UserRepository;
 import shop.makaroni.bunjang.src.response.exception.CannotEncodeEx;
 import shop.makaroni.bunjang.utils.AES128;
 import shop.makaroni.bunjang.utils.JwtService;
@@ -29,6 +31,24 @@ public class UserService {
 	private final JwtService jwtService;
 
 	private final UserDao userDao;
+
+	private final UserRepository userRepository;
+
+	public Long saves(SaveUserRequest request) {
+
+		userProvider.checkDuplicateLoginId(request.getLoginId());
+		ValidationRegex.isRegexPassword(request.getPassword());
+
+		String encodePassword;
+
+		try {
+			encodePassword = AES128.encode(request.getPassword());
+		} catch (GeneralSecurityException e) {
+			throw new CannotEncodeEx(CANNOT_ENCODE_PASSWORD.getMessages());
+		}
+
+		return userRepository.save(Users.of(request)).getIdx();
+	}
 
 	public Long save(SaveUserRequest request) {
 		userProvider.checkDuplicateLoginId(request.getLoginId());

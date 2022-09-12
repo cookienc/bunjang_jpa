@@ -52,7 +52,7 @@ public class UserController {
 	@ApiOperation("ID와 PW로 회원가입")
 	@PostMapping
 	public ResponseEntity<ResponseInfo> save(@Valid @RequestBody SaveUserRequest request) {
-		Long userIdx = userService.save(request);
+		Long userIdx = userService.saves(request);
 		String url = "/users/" + userIdx;
 		return ResponseEntity.created(URI.create(url)).body(ResponseInfo.of(SAVE_SUCCESS));
 	}
