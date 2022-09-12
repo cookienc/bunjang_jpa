@@ -1,13 +1,18 @@
 package shop.makaroni.bunjang.utils;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class PagingCond {
 	public static final String ASC = "asc";
+
+	@ApiModelProperty(notes = "페이지 시작 번호", example = "0")
 	private Integer start;
+	@ApiModelProperty(notes = "페이지 크기", example = "10")
 	private Integer offset;
+	@ApiModelProperty(notes = "날짜 정렬(최신 순, 오래된 순)", example = "ASC")
 	private String dateSort;
 
 	@Builder
