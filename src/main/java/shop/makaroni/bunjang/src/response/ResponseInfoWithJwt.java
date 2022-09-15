@@ -1,5 +1,6 @@
 package shop.makaroni.bunjang.src.response;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ResponseInfoWithJwt {
+
+	@ApiModelProperty(notes = "응답 코드", example = "200")
 	private String code;
+	@ApiModelProperty(notes = "응답 메세지")
 	private String message;
+	@ApiModelProperty(notes = "JWT 토큰", example = "efajdkljvca124dflvajl")
 	private String jwt;
 
 	public ResponseInfoWithJwt(String code, String message, String jwt) {
