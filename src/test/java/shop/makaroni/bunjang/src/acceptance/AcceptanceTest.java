@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import shop.makaroni.bunjang.src.utils.DatabaseCleanup;
 
+import static shop.makaroni.bunjang.src.acceptance.LoginUtils.join;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AcceptanceTest {
 
@@ -16,10 +18,13 @@ class AcceptanceTest {
 	@Autowired
 	private DatabaseCleanup databaseCleanup;
 
+	private static String admin = "admin";
+	private static String password = "1234abce!@#";
 
 	@BeforeEach
 	public void setUp() {
 		RestAssured.port = port;
 		databaseCleanup.execute();
+		join(admin, password);
 	}
 }

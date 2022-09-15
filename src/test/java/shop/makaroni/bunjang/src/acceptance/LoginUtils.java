@@ -1,12 +1,12 @@
 package shop.makaroni.bunjang.src.acceptance;
 
-import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.springframework.http.MediaType;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static shop.makaroni.bunjang.src.acceptance.AcceptanceSteps.given;
 
 public class LoginUtils {
 
@@ -15,9 +15,20 @@ public class LoginUtils {
 		params.put("loginId", "edan1234");
 		params.put("password", "1234abce!@#");
 
-		return RestAssured.given().log().all()
+		return given()
 				.body(params)
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.when().post("/users")
+				.then().log().all()
+				.extract();
+	}
+
+	public static ExtractableResponse<Response> join(String loginId, String password) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("loginId", "loginId");
+		params.put("password", "password");
+
+		return given()
+				.body(params)
 				.when().post("/users")
 				.then().log().all()
 				.extract();
