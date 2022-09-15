@@ -66,10 +66,10 @@ public class Users extends BaseEntity {
 		this.hit = hit;
 	}
 
-	public static Users of(SaveUserRequest request) {
+	public static Users of(SaveUserRequest request, String encodePassword) {
 		return Users.builder()
 				.loginId(request.getLoginId())
-				.password(request.getPassword())
+				.password(encodePassword)
 				.storeName(request.getStoreName())
 				.build();
 	}

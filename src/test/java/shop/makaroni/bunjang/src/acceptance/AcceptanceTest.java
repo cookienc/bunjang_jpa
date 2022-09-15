@@ -18,8 +18,8 @@ class AcceptanceTest {
 	@Autowired
 	private DatabaseCleanup databaseCleanup;
 
-	private static String admin = "admin";
-	private static String password = "1234abce!@#";
+	public static String admin = "admin";
+	public static String password = "1234abce!@#";
 
 	@BeforeEach
 	public void setUp() {

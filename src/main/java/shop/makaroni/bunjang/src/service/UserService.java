@@ -47,7 +47,7 @@ public class UserService {
 			throw new CannotEncodeEx(CANNOT_ENCODE_PASSWORD.getMessages());
 		}
 
-		return userRepository.save(Users.of(request)).getIdx();
+		return userRepository.save(Users.of(request, encodePassword)).getIdx();
 	}
 
 	public Long save(SaveUserRequest request) {

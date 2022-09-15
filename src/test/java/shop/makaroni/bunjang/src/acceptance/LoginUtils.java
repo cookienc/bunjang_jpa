@@ -24,8 +24,8 @@ public class LoginUtils {
 
 	public static ExtractableResponse<Response> join(String loginId, String password) {
 		Map<String, Object> params = new HashMap<>();
-		params.put("loginId", "loginId");
-		params.put("password", "password");
+		params.put("loginId", loginId);
+		params.put("password", password);
 
 		return given()
 				.body(params)
